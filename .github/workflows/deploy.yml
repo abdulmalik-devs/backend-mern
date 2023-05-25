@@ -19,7 +19,7 @@ jobs:
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |-
             echo "******************************************************"
-            echo "Installing neccessary dependencies for client instance"
+            echo "Installing neccessary dependencies for server instance"
             echo "*******************************************************"
                       
             sudo apt-get update
@@ -50,7 +50,7 @@ jobs:
             sudo ufw --force enable 
 
             echo "******************************************************"
-            echo "Performing the following actions on client instance"
+            echo "Performing the following actions on server instance"
             echo "*******************************************************"
 
             git clone https://github.com/abdulmalik-devs/backend-mern.git
