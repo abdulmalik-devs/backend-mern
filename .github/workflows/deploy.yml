@@ -52,13 +52,14 @@ jobs:
             echo "******************************************************"
             echo "Performing the following actions on server instance"
             echo "*******************************************************"
-
+            
+            sudo rm -rf backend-mern || true
             git clone https://github.com/abdulmalik-devs/backend-mern.git
             cd backend-mern
             sudo npm install
             sudo pm2 kill
-            sudo kill $(lsof -nt -i4TCP:3000)
-            pm2 serve build/ 3000 -f --name "frontend" --spa
+            sudo kill $(lsof -nt -i4TCP:5000)
+            sudo pm2 start index.js --name "backend"
             
             sudo tee /etc/nginx/sites-available/myapp.conf > /dev/null << EOF
             server {
@@ -71,7 +72,7 @@ jobs:
             }
             EOF
 
-            sudo rm -f /etc/nginx/sites-enabled/default
+            sudo rm -rf /etc/nginx/sites-enabled/default || true
             sudo ln -s /etc/nginx/sites-available/myapp.conf /etc/nginx/sites-enabled/
             sudo nginx -t
             sudo systemctl restart nginx
